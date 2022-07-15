@@ -14,7 +14,9 @@ class CreateOlympicDto {
 
   location: string; //the place where the olympiad was organized
 }
+```
 
+```javascript
   findAllSortedByLocation(offset?: number, limit?: number) {
     return this.olympicsRepository.find({
       relations: ['result', 'result.country', 'result.medals'],
@@ -33,13 +35,25 @@ class CreateOlympicDto {
   }
 ```
 
-2. Create, read, update, delete for the country
+2. Uploading a picture of the flag. And create, read, update, delete for the country.
 
 ```javascript
 class CreateCountryDto {
   name: string; //Country name
 }
 
+  @Post()
+  @UseInterceptors(FileInterceptor('file'))
+  async create(
+    @UploadedFile() image: Express.Multer.File,
+    @Body() createCountryDto: CreateCountryDto,
+  ) {
+    const imageUrl = await this.googleDriveService.generateImageUrl(image);
+    return this.countriesService.create(createCountryDto, imageUrl);
+  }
+```
+
+```javascript
   findAll(offset?: number, limit?: number) {
     return this.countriesRepository.find({
       relations: ['result', 'result.olympic', 'result.medals'],
@@ -68,7 +82,9 @@ class CreateMedalsDto {
 
   brown: number;
 }
+```
 
+```javascript
   findAllSortedByMedals(offset?: number, limit?: number) {
     return this.resultsRepository.find({
       relations: ['country', 'olympic'],
@@ -87,7 +103,9 @@ export class PaginationParams {
 
   limit?: number;
 }
+```
 
+```javascript
   findAllSortedByMedals(offset?: number, limit?: number) {
     return this.resultsRepository.find({
       relations: ['country', 'olympic'],
