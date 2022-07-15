@@ -1,0 +1,118 @@
+version: '3.8'
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes: 
+        - .:/olympics/src/app
+        - /olympics/src/app/node_module
+    command: npm run start:debug
+    env_file: 
+        - .env
+    depends_on: 
+        - postgres
+    environment: 
+        DATABASE_URL: postgres://postgres:Severyn66@postgres:5432/olympic
+        NODE_ENV: development
+        PORT: 3000
+    ports:
+        - 8080:3000
+        - 9229:9229
+
+  postgres:
+      container_name: postgres
+      image: postgres:10
+      environment: 
+          POSTGRES_PASSWORD: Severyn66
+          POSTGRES_USER: postgres
+          POSTGRES_DB: olympic
+          PG_DATA: /var/lib/postgresql/data
+      ports:
+          - 35000:5432
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# version: "3.8"
+# services:
+#   api:
+#     # image: thomas-oliver/nestjs-dockerized 
+#     build:
+#       dockerfile: Dockerfile
+#       context: .
+#       # Only will build development stage from our dockerfile
+#       target: development
+#     # Mount our host Directory to the docker container
+#     # Mount (.) current directory to the docker container thomas/src/app
+#     # reflect file changes from host to container
+#     volumes:
+#       - .:/olympics/src/app
+#       - ./olympics/src/app/node_modules
+#     # Run in Debug Mode: npm run start:debug --> Don't forget to start your vscode debugger!
+#     # Run in dev Mode: npm run start:dev
+#     command: npm run start:debug
+#     depends_on: 
+#       - postgres
+#     environment: 
+#       DATABASE_URL: postgres://user:password@postgres:5432/db
+#       NODE_ENV: development
+#       PORT: 3000
+#     ports:
+#       - 8080:3000
+#       # debugging port
+#       - 9229:9229
+
+#   postgres:
+#     image: postgres:10.4
+#     environment: 
+#       POSTGRES_USER: user
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: db
+#     ports:
+#       - 35000:5432
+
+
+# services:
+#   postgres:
+#     container_name: postgres
+#     image: postgres:latest
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - /data/postgres:/data/postgres
+#     env_file:
+#       - docker.env
+#     networks:
+#       - postgres
+
+#   pgadmin:
+#     links:
+#       - postgres:postgres
+#     container_name: pgadmin
+#     image: dpage/pgadmin4
+#     ports:
+#       - "8080:80"
+#     volumes:
+#       - /data/pgadmin:/root/.pgadmin
+#     env_file:
+#       - docker.env
+#     networks:
+#       - postgres
