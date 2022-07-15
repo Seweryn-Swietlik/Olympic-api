@@ -3,7 +3,7 @@ import { OlympicsService } from './olympics.service';
 import { OlympicsController } from './olympics.controller';
 import { Olympic } from './entities/olympic.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ValidationService } from 'src/utils/validation.service';
+import { ValidationService } from 'src/utils/services/validation.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Olympic])],
   controllers: [OlympicsController],

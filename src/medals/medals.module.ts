@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ValidationService } from 'src/utils/validation.service';
+import { ValidationService } from 'src/utils/services/validation.service';
 import { Medals } from './entities/medals.entity';
 import { MedalsService } from './medals.service';
 

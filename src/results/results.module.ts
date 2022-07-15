@@ -4,7 +4,7 @@ import { ResultsController } from './results.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Result } from './entities/result.entity';
 import { MedalsModule } from 'src/medals/medals.module';
-import { ValidationService } from 'src/utils/validation.service';
+import { ValidationService } from 'src/utils/services/validation.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Result]), MedalsModule],

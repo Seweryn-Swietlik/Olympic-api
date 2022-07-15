@@ -7,7 +7,11 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { GoogleDriveService } from 'src/utils/services/google-drive.service';
 import { PaginationParams } from 'src/utils/types/pagination-params';
 import { CountriesService } from './countries.service';
 import { CreateCountryDto } from './dto/create-country.dto';
@@ -15,11 +19,19 @@ import { UpdateCountryDto } from './dto/update-country.dto';
 
 @Controller('countries')
 export class CountriesController {
-  constructor(private readonly countriesService: CountriesService) {}
+  constructor(
+    private readonly countriesService: CountriesService,
+    private googleDriveService: GoogleDriveService,
+  ) {}
 
   @Post()
-  create(@Body() createCountryDto: CreateCountryDto) {
-    return this.countriesService.create(createCountryDto);
+  @UseInterceptors(FileInterceptor('file'))
+  async create(
+    @UploadedFile() image: Express.Multer.File,
+    @Body() createCountryDto: CreateCountryDto,
+  ) {
+    const imageUrl = await this.googleDriveService.generateImageUrl(image);
+    return this.countriesService.create(createCountryDto, imageUrl);
   }
 
   @Get()

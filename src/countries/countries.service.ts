@@ -4,7 +4,7 @@ import { CreateCountryDto } from './dto/create-country.dto';
 import { UpdateCountryDto } from './dto/update-country.dto';
 import { Country } from './entities/country.entity';
 import { Repository } from 'typeorm';
-import { ValidationService } from 'src/utils/validation.service';
+import { ValidationService } from 'src/utils/services/validation.service';
 
 @Injectable()
 export class CountriesService {
@@ -14,7 +14,7 @@ export class CountriesService {
     private validationService: ValidationService,
   ) {}
 
-  async create({ name }: CreateCountryDto) {
+  async create({ name }: CreateCountryDto, flagImageUrl: string) {
     const existingCountry = await this.countriesRepository
       .createQueryBuilder()
       .where('LOWER(name) = LOWER(:name)', {
@@ -23,7 +23,7 @@ export class CountriesService {
       .getOne();
     this.validationService.throwIfExist(existingCountry);
 
-    const country = this.countriesRepository.create({ name });
+    const country = this.countriesRepository.create({ name, flagImageUrl });
     await this.countriesRepository.save(country);
     return country.id;
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ValidationService } from 'src/utils/validation.service';
+import { ValidationService } from 'src/utils/services/validation.service';
 import { Repository } from 'typeorm';
 import { CreateMedalsDto } from './dto/create-medal.dto';
 import { UpdateMedalsDto } from './dto/update-medal.dto';

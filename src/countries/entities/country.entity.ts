@@ -9,6 +9,9 @@ export class Country {
   @Column()
   name: string;
 
+  @Column()
+  flagImageUrl: string;
+
   @OneToMany(() => Result, (result) => result.olympic)
   result: Result;
 }

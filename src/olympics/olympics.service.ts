@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Brackets, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateOlympicDto } from './dto/update-olympic.dto';
 import { CreateOlympicDto } from './dto/create-olympic.dto';
 import { Olympic } from './entities/olympic.entity';
-import { ValidationService } from 'src/utils/validation.service';
+import { ValidationService } from 'src/utils/services/validation.service';
 
 @Injectable()
 export class OlympicsService {
@@ -95,35 +95,6 @@ export class OlympicsService {
   private findOne(id: number) {
     return this.olympicsRepository.findOne({ where: { id } });
   }
-
-  // private findExistingOlympic({ year, kind, location }: CreateOlympicDto) {
-  //   return this.olympicsRepository
-  //     .createQueryBuilder()
-  //     .where('LOWER(kind) = LOWER(:kind) OR ', {
-  //       kind,
-  //     })
-  //     .andWhere(
-  //       new Brackets((qb) => {
-  //         qb.where('year = :year', {
-  //           year,
-  //         }).andWhere('LOWER(location) = LOWER(:location)', { location });
-  //       }),
-  //     )
-  //     .getOne();
-  // }
-
-  // private findExistingOlympic({ year, kind, location }: CreateOlympicDto) {
-  //   return this.olympicsRepository
-  //     .createQueryBuilder()
-  //     .where('LOWER(kind) = LOWER(:kind)', {
-  //       kind,
-  //     })
-  //     .andWhere('year = :year', {
-  //       year,
-  //     })
-  //     .andWhere('LOWER(location) = LOWER(:location)', { location })
-  //     .getOne();
-  // }
 
   private findExistingOlympic({ year, kind, location }: CreateOlympicDto) {
     return this.olympicsRepository
