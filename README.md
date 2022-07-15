@@ -117,6 +117,6 @@ export class PaginationParams {
 ```
 
 5. ERD schema was generated in pgAdmin
-   https://i.imgur.com/KGzTo3c.png
+   https://i.imgur.com/zqmlKIO.png
 
 6. Docker images for the application and database have been put up (Images build correctly but there was a problem with the connection to the database which was not solved for lack of enough time)
