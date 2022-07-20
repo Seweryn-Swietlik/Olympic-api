@@ -1,6 +1,6 @@
 # Olympic-api
 
-The application allows you to create your own tables with results from the Olympiads
+The application allows you to create your own tables with results from the Olympics
 
 ## The application allows you to:
 
